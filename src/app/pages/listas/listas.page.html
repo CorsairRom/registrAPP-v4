@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="duocb">
+    <ion-buttons slot="start">
+      <ion-buttons slot="start">
+        <ion-menu-button menu="first" color="duocy"></ion-menu-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+    </ion-buttons>
+    <ion-title>Lista</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClick()">
+        <ion-icon slot="icon-only" [name]="favorito ? 'heart':'heart-outline' "></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card-header>
+    <ion-card-subtitle>Presente</ion-card-subtitle>
+    <ion-card-title>Richard Romero</ion-card-title>
+    <ion-card-subtitle>Registro {{RegFecha}} a las: {{RegHora}}  </ion-card-subtitle>
+    
+  </ion-card-header>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item *ngFor="let c of item; let i = index">
+    <ion-card>
+      <ion-col size="8">{{c.name}}</ion-col>
+      <ion-col size="6">
+        <ion-icon color="duocb"></ion-icon> seccion {{c.secci}}
+      </ion-col>
+      <ion-col size="6">
+        <ion-icon color="duocb"></ion-icon>{{ horac }}
+      </ion-col>
+      <ion-col size="6">
+        <ion-icon color="duocb"></ion-icon> {{fecha}}
+      </ion-col>
+    </ion-card>
+  </ion-item>
+
+  <ion-infinite-scroll threshold="200px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="cargando....">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
