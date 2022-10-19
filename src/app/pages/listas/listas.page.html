@@ -19,7 +19,6 @@
 <ion-content class="ion-padding">
   <h4 class="ion-text-center">Asistente</h4>
   <br>
-  <br>
   <ion-card id="card" color="duocy" >
     <div class="img-wrapper">
       <img src="./assets/imgs/men-1.jpg" />
@@ -31,20 +30,19 @@
     <ion-card-content class="ion-text-center text">
       <h2 color="duocb">{{nombre}}</h2>
       <ion-text color="medium">
-        <div style="display: flex;" class="ion-justify-content-center">
+        <div style="display: block" class="ion-justify-content-center">
           <!-- <ion-icon name="location-outline" color="medium">
           </ion-icon> -->
-          <p color="primary">2345 Street, Ohio, USA.</p>
+          <p> {{RegFecha}}  {{RegHora}} </p>
+          <p> {{RegCurso}} </p>
+          <p> {{RegSeccion}} </p>
         </div>
       </ion-text>
     </ion-card-content>
   </ion-card>
 
   <ion-card-header>
-    <ion-card-subtitle>Presente</ion-card-subtitle>
-    <ion-card-title>Richard Romero</ion-card-title>
-    <ion-card-subtitle>Registro {{RegFecha}} a las: {{RegHora}}  </ion-card-subtitle>
-    
+    <ion-card-subtitle>Asistentes</ion-card-subtitle>
   </ion-card-header>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>

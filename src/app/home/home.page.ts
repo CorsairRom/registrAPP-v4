@@ -34,6 +34,7 @@ export class HomePage implements OnInit{
     //   }
       
     // })
+    
   }
   verMenu(){
     this.menu.toggle('first');

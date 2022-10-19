@@ -21,13 +21,15 @@ export class ListasPage implements OnInit {
   fecha: string = '';
   RegHora:string;
   RegFecha:string;
+  RegCurso:string;
+  RegSeccion:String;
   item = [];
   listaActual={
     "CurrentClass": "",
     "CurrenteDate": ""
   }
   drop:any;
-  data:string;
+  data:string = '';
   usr:Usuario;
   nombre:string;
   favorito: boolean = false;
@@ -112,13 +114,16 @@ export class ListasPage implements OnInit {
     let hora = new Date();
     this.horac = hora.toLocaleTimeString()
     this.fecha = hora.toLocaleDateString()
-    await this.getDato()
-    let dropdate = (this.drop["CurrentDate"]+"").split("T")
-    this.RegFecha = dropdate[0]
-    this.RegHora = (dropdate[1]+"").split(".")[0]
     this.usr = await this.getDataStorage()
-    this.nombre = this.usr.nombre
-    console.log(this.usr.nombre);
+    this.nombre = this.usr.nombre+""
+    if (this.data.length>0) {
+      this.RegFecha = this.data.split(',')[0]+""
+      this.RegHora = this.data.split(',')[1]+""
+      this.RegCurso = this.data.split(',')[2]+""
+      this.RegSeccion = this.data.split(',')[3]+""
+    }
+    
+    
     
   }
 
