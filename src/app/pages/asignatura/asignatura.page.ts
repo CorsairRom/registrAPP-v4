@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 
 interface asignatura{
   icon: string;
@@ -34,9 +35,12 @@ export class AsignaturaPage implements OnInit {
   ]
 
 
-  constructor() { }
+  constructor(private storage:Storage) { }
 
   ngOnInit() {
+  }
+  sendData(name){
+    this.storage.set('asignatura', name+"")
   }
 
 }

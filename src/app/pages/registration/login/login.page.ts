@@ -14,6 +14,7 @@ import { Storage } from '@ionic/storage-angular'
 import { Users, Usuario } from '../../../interfaces/users';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
+import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 
 
 @Component({
@@ -35,9 +36,7 @@ export class LoginPage implements OnInit {
     fecha: ""
   }]
 
-  title = 'app';
-  elementType = 'url';
-  value = 'Techiediaries';
+  
 
   constructor(public fb: FormBuilder,
     private router: Router,
@@ -64,8 +63,6 @@ export class LoginPage implements OnInit {
     // pruebas service
     this.userData = await this.datasv.getUser();
     console.log(this.userData);
-
-    // this.codeMonkey()
 
     let hr = await this.getHora()
 
@@ -159,22 +156,7 @@ export class LoginPage implements OnInit {
 
   }
 
-  async codeMonkey() {
-    const options = {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'X-RapidAPI-Key': '12ea2cd02fmsh2881d68851ff8b2p173575jsnc0b7188ffb3c',
-        'X-RapidAPI-Host': 'qrcode3.p.rapidapi.com'
-      },
-      body: '{"data":"asdasd","image":"Clase"}'
-    };
-
-    fetch('https://qrcode3.p.rapidapi.com/qrcode/text', options)
-      .then(response => response.json())
-      .then(response => console.log(response))
-      .catch(err => console.error(err));
-  }
+  
 
 }
 
