@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 
 interface seccion {
   icon: string;
@@ -38,9 +39,13 @@ export class SeccionPage implements OnInit {
 
   ]
 
-  constructor() { }
+  constructor(private storage:Storage) { }
 
   ngOnInit() {
   }
+  sendSeccion(seccion){
+    this.storage.set('seccion', seccion+'')
+  }
+  
 
 }

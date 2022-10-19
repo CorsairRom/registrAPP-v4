@@ -18,6 +18,7 @@ export class AppComponent implements OnInit{
   username:string='';
   opc:boolean=false;
   tipo:Usuario;
+  tip:Usuario;
   
   constructor(
     private menu:MenuController,
@@ -41,9 +42,14 @@ export class AppComponent implements OnInit{
     // await this.getData()
     // this.tipo = await this.getAsync()
     await this.getAsync()
+    this.tip = await this.getUsr()
     console.log("este es el tipo ----> " + this.tipo);
+    console.log("este es el tipo ----> " + this.tip);
     // console.log((await this.getAsync()).nombre);
     
+  }
+  async getUsr(){
+    return await this.storage.get("usr");
   }
 
   // async getData(){

@@ -8,24 +8,47 @@ import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiedi
   styleUrls: ['./generar-qr.page.scss'],
 })
 export class GenerarQrPage implements OnInit {
-
-  nam = 'hola mundo'
+  
+  //variables NgxQR ⬇
   name = 'Angular ';
   elementType = NgxQrcodeElementTypes.URL;
   correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
-  value = this.nam //aqui colocar una variable
+  value:string; //aqui colocar una variable
   backgroundColor = '#ffb60f'
   duocColorB = '#00263e'
   scale = 8
-
+  //variables pagina ⬇
   display:boolean = false;
+  asignatura:string = '';
+  seccion:string = '';
+  fecha:string = '';
+  hora:string = '';
+  
+
   constructor(private storage:Storage) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    let h = await this.getFecha()
+    this.fecha = h.toLocaleString().split(',')[0]
+    this.hora = h.toLocaleString().split(',')[1]
+    this.asignatura = await this.getDataAsignatura()
+    this.seccion = await this.getDataSeccion()
+    this.value = this.fecha+','+this.hora+','+this.asignatura+','+this.seccion
+    console.log(this.value);
   }
 
   genQR(){
     this.display = !this.display
+  }
+  async getDataAsignatura(){
+    return await this.storage.get('asignatura')
+  }
+  async getDataSeccion(){
+    return await this.storage.get('seccion')
+  }
+  async getFecha(){
+    let hr = new Date
+    return hr
   }
 
 }

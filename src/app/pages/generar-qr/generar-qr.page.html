@@ -7,18 +7,21 @@
       <ion-card-title>QR Actual </ion-card-title>
     </ion-card-header>
     <ion-button expand="block" (click)="genQR()">Generar QR</ion-button>
-    <ngx-qrcode 
-    *ngIf="display"
-    [elementType]="elementType" 
-    [errorCorrectionLevel]="correctionLevel" 
-    [value]="value" alt="Demo QR Code"
-    [colorLight]='backgroundColor'
-    [scale]='scale'
-    [colorDark]='duocColorB'
-    cssClass="bshadow" class="ion-text-center"></ngx-qrcode>
     <ion-card-content>
-      Codigo de asistencia Hora de inicio hh/mm/ss
-      Hora de expiración hh/mm/ss generado el dd/mm/aa
+      <ngx-qrcode 
+      *ngIf="display"
+      [elementType]="elementType" 
+      [errorCorrectionLevel]="correctionLevel" 
+      [value]="value" alt="Demo QR Code"
+      [colorLight]='backgroundColor'
+      [scale]='scale'
+      [colorDark]='duocColorB'
+      cssClass="bshadow" class="ion-text-center"></ngx-qrcode>
+      <hr>
+      <p>Clase: {{asignatura}} </p>
+      <p>Seccion: {{seccion}} </p>
+      <p>Fecha: {{fecha}} </p>
+      <p>Hora: {{hora}} </p>
     </ion-card-content>
     
   </ion-card>
