@@ -15,6 +15,7 @@ import { Users, Usuario } from '../../../interfaces/users';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -29,11 +30,20 @@ export class LoginPage implements OnInit {
   loading: HTMLIonLoadingElement;
   userData: Usuario;
 
+  dato = [{
+    horac: "",
+    fecha: ""
+  }]
+
+  title = 'app';
+  elementType = 'url';
+  value = 'Techiediaries';
+
   constructor(public fb: FormBuilder,
     private router: Router,
     private alertController: AlertController,
     public datasv: DataService,
-    public sg:StorageService,
+    public sg: StorageService,
     public navCtrl: NavController,
     private storage: Storage,
     public loadingController: LoadingController
@@ -54,10 +64,25 @@ export class LoginPage implements OnInit {
     // pruebas service
     this.userData = await this.datasv.getUser();
     console.log(this.userData);
+
+    // this.codeMonkey()
+
+    let hr = await this.getHora()
+
+    console.log(this.getHora());
+    
+    this.dato["hora"]=hr.toISOString()
+    this.dato["fecha"]=hr.toISOString()
+    console.log(this.dato);
     
     
 
   }
+  async getHora(){
+    let hr = new Date
+    return hr
+  }
+
   async checkUsr(input: string, user) {
     await user.usuarios.some(usr => {
       return usr.usr === input
@@ -73,7 +98,7 @@ export class LoginPage implements OnInit {
     this.sendData = this.users.usuarios.find(usr => { return usr.usr === f.usuario })
     if ((this.sendData?.usr == f.usuario && this.sendData?.password == f.password)) {
       this.mostrarLoading();
-      
+
     }
     else {
       this.presentAlert();
@@ -89,7 +114,7 @@ export class LoginPage implements OnInit {
     this.presentLoading();
     this.log(this.sendData);
     this.setStorageAsync();
-    
+
     setTimeout(() => {
       this.loading.dismiss();
       this.router.navigate(['/home'])
@@ -130,8 +155,26 @@ export class LoginPage implements OnInit {
   }
 
   async setStorageAsync() {
-    this.sg.set('us', this.sendData )
-    
+    this.sg.set('us', this.sendData)
+
   }
+
+  async codeMonkey() {
+    const options = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'X-RapidAPI-Key': '12ea2cd02fmsh2881d68851ff8b2p173575jsnc0b7188ffb3c',
+        'X-RapidAPI-Host': 'qrcode3.p.rapidapi.com'
+      },
+      body: '{"data":"asdasd","image":"Clase"}'
+    };
+
+    fetch('https://qrcode3.p.rapidapi.com/qrcode/text', options)
+      .then(response => response.json())
+      .then(response => console.log(response))
+      .catch(err => console.error(err));
+  }
+
 }
 
