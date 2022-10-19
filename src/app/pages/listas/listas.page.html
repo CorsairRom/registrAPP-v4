@@ -8,7 +8,7 @@
         <ion-back-button></ion-back-button>
       </ion-buttons>
     </ion-buttons>
-    <ion-title>Lista</ion-title>
+    <ion-title class="ion-text-center">Lista</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="onClick()">
         <ion-icon slot="icon-only" [name]="favorito ? 'heart':'heart-outline' "></ion-icon>
@@ -16,7 +16,30 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content class="ion-padding">
+  <h4 class="ion-text-center">Asistente</h4>
+  <br>
+  <br>
+  <ion-card id="card" color="duocy" >
+    <div class="img-wrapper">
+      <img src="./assets/imgs/men-1.jpg" />
+      <ion-button color="light">
+        <ion-icon slot="icon-only" name="camera-outline" color="medium">
+        </ion-icon>
+      </ion-button>
+    </div>
+    <ion-card-content class="ion-text-center text">
+      <h2 color="duocb">{{nombre}}</h2>
+      <ion-text color="medium">
+        <div style="display: flex;" class="ion-justify-content-center">
+          <!-- <ion-icon name="location-outline" color="medium">
+          </ion-icon> -->
+          <p color="primary">2345 Street, Ohio, USA.</p>
+        </div>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card-header>
     <ion-card-subtitle>Presente</ion-card-subtitle>
     <ion-card-title>Richard Romero</ion-card-title>

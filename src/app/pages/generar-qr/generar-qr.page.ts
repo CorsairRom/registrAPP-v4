@@ -35,10 +35,12 @@ export class GenerarQrPage implements OnInit {
     this.seccion = await this.getDataSeccion()
     this.value = this.fecha+','+this.hora+','+this.asignatura+','+this.seccion
     console.log(this.value);
+    
   }
 
-  genQR(){
+  async genQR(){
     this.display = !this.display
+    await this.setStorageData()
   }
   async getDataAsignatura(){
     return await this.storage.get('asignatura')
@@ -49,6 +51,9 @@ export class GenerarQrPage implements OnInit {
   async getFecha(){
     let hr = new Date
     return hr
+  }
+  async setStorageData(){
+    await this.storage.set("claseActual", this.value)
   }
 
 }
