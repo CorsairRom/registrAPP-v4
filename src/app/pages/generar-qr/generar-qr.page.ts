@@ -54,6 +54,7 @@ export class GenerarQrPage implements OnInit {
   }
   async setStorageData(){
     await this.storage.set("claseActual", this.value)
+    console.log("HolaMundo");
   }
 
 }
