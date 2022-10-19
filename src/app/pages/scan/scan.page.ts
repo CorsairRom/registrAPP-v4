@@ -28,8 +28,12 @@ export class ScanPage implements OnInit {
     }
   ];
   curso:string;
-  constructor(private barcodeScanner: BarcodeScanner, private sg:Storage) { }
 
+
+  constructor(private barcodeScanner: BarcodeScanner, private sg:Storage) { }
+ 
+
+ 
 
   
   scan(){
@@ -39,6 +43,8 @@ export class ScanPage implements OnInit {
      }).catch(err => {
          console.log('Error', err);
      });
+
+     
   }
   async ngOnInit() {
     this.nombre = await this.sg.get("usuario")
