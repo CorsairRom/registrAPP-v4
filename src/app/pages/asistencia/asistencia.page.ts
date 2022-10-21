@@ -34,14 +34,17 @@ export class AsistenciaPage implements OnInit {
     
     this.dataStorage = await this.getStorage('asistencia')
     console.log(this.dataStorage);
-    this.dataStorage.forEach(res => res.CurrentClass == this.curso)
+    // let dataST = this.dataStorage.forEach(res => res.CurrentClass == this.curso)
     console.log('datos del for each');
-    let opcion = this.dataStorage.some(res => res.CurrentClass == this.curso);
-    
-    if (opcion) {
-      this.cursoData = this.dataStorage.find(res => res.CurrentClass == this.curso);
-      console.log(this.cursoData);
+    // console.log(dataST);
+    if (this.dataStorage !=null) {
+      let opcion = this.dataStorage.some(res => res.CurrentClass == this.curso);
+      if (opcion) {
+        this.cursoData = this.dataStorage.find(res => res.CurrentClass == this.curso);
+        console.log(this.cursoData);
+      }
     }
+    
   }
 
   async getStorage(key:string){
