@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
+
+
+
+interface dataScan{
+  CurrentClass: string;
+  CurrentDate: string;
+};
 
 @Component({
   selector: 'app-asistencia',
@@ -7,16 +15,42 @@ import { Storage } from '@ionic/storage-angular';
   styleUrls: ['./asistencia.page.scss'],
 })
 export class AsistenciaPage implements OnInit {
+  
+  dataStorage:dataScan[]=[]
+  current:any;
+  curso:string;
+  cursoData:any=[];
 
-  constructor(private storage:Storage) { }
+  constructor(private storage:Storage, private router:Router, private activeRoute: ActivatedRoute) {
+    this.activeRoute.queryParams.subscribe(params =>{
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.curso = this.router.getCurrentNavigation().extras.state.curso
+        console.log(this.curso);
+      }
+    })
+   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    
+    this.dataStorage = await this.getStorage('asistencia')
+    console.log(this.dataStorage);
+    this.dataStorage.forEach(res => res.CurrentClass == this.curso)
+    console.log('datos del for each');
+    let opcion = this.dataStorage.some(res => res.CurrentClass == this.curso);
+    
+    if (opcion) {
+      this.cursoData = this.dataStorage.find(res => res.CurrentClass == this.curso);
+      console.log(this.cursoData);
+    }
   }
 
-  async getAsistencia(){
-    if (this.storage.get('asistencia')!= null) {
-      return this.storage.get('asistencia')
+  async getStorage(key:string){
+    if (this.storage.get(key)!= null) {
+      return await this.storage.get(key)
     }
+  }
+  async setStorage(key:string, value){
+    await this.storage.set(key, value);
   }
 
 }

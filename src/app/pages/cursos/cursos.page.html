@@ -2,7 +2,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let c of componentes" [routerLink]= "c.redirectTo" >
+    <ion-item *ngFor="let c of componentes"  (click)="sendCurso(c.name)">
       <ion-avatar slot="start">
         <img src="{{c.icon}}" />
       </ion-avatar>

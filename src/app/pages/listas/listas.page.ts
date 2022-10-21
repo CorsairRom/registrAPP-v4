@@ -114,7 +114,7 @@ export class ListasPage implements OnInit {
     let hora = new Date();
     this.horac = hora.toLocaleTimeString()
     this.fecha = hora.toLocaleDateString()
-    this.usr = await this.getDataStorage()
+    this.usr = await this.getStorage('usr')
     this.nombre = this.usr.nombre+""
     if (this.data.length>0) {
       this.RegFecha = this.data.split(',')[0]+""
@@ -122,14 +122,11 @@ export class ListasPage implements OnInit {
       this.RegCurso = this.data.split(',')[2]+""
       this.RegSeccion = this.data.split(',')[3]+""
     }
-    
+    let getData = await this.getStorage('asistencia')
     
     
   }
 
-  async getDato(){
-    this.drop = await this.sg.get("scanData")
-  }
 
   onClick() {
     this.favorito = !this.favorito;
@@ -150,9 +147,12 @@ export class ListasPage implements OnInit {
     }, 1500)
   }
 
-  async getDataStorage(){
-      return this.sg.get('usr')
-  }
 
+  async getStorage(key:string){
+    return await this.sg.get(key)
+  }
+  async setStorage(key:string,valor){
+    return await this.sg.set(key, valor)
+  }
 
 }

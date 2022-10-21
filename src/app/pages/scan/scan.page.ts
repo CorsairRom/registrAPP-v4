@@ -28,7 +28,7 @@ export class ScanPage implements OnInit {
 
 
   listaActual:dataScan[] = []; 
-  asistencias = []
+  asistencias = [{}]
 
 
   curso:string;
@@ -57,35 +57,21 @@ export class ScanPage implements OnInit {
     let aletorio = this.numeroAleatorioDecimales()
     let currentDat = new Date()
     let CurrentClas = this.clases[aletorio]
-    // console.log(CurrentClas);
-    // this.listaActual["CurrentClass"] = CurrentClas
-    // this.listaActual["CurrentDate"] = currentDat.toISOString()
     this.listaActual['CurrentClass'] = CurrentClas+""
     this.listaActual['CurrentDate'] = currentDat.toISOString()
-    
-    this.SetData()
-
-    // this.asistencias.push(...this.listaActual)
-    // this.asistencias = [...this.listaActual]
-    this.asistencias.concat(...this.asistencias)
-    
-    console.log(this.listaActual);
-    console.log(this.asistencias);
-
+  
     if (await this.getStorage('asistencia')!=null) {
       let dataSG = await this.getStorage('asistencia')
+      let data= []
+      data = dataSG
+      data.push(this.listaActual)
+      await this.setStorage('asistencia', data)
     } else {
       await this.setStorage('asistencia', this.listaActual)
       console.log("se creo el storage");
     }
   }
-  // pushElementos(){
-  //   this.asistencias.push(this.listaActual)
-  // }
-
-  async SetData ():Promise<void> {
-    await this.sg.set("scanData", this.listaActual);
-  }
+ 
   async cathQR(){
     let claseActualData = await this.getStorage("claseActual")
     this.data = claseActualData+""

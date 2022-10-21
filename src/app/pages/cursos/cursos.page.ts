@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
 
 interface Cursos {
   icon: string;
@@ -27,7 +28,7 @@ export class CursosPage implements OnInit {
     },
     {
     icon: 'assets/icon/cursos/analitica.png',
-    name: 'Estadistica',
+    name: 'Estadistica descriptiva',
     redirectTo: '/asistencia'
     },
     {
@@ -42,19 +43,27 @@ export class CursosPage implements OnInit {
     },
     {
     icon: 'assets/icon/cursos/calidad.png',
-    name: 'Calidad',
+    name: 'Calidad de software',
     redirectTo: '/asistencia'
     },
     {
     icon: 'assets/icon/cursos/computadora.png',
-    name: 'Aplicaciones móviles',
+    name: 'Aplicaciones moviles',
     redirectTo: '/asistencia'
     },
   ]
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
+  }
+  sendCurso(name:string){
+    let navExtras:NavigationExtras={
+      state:{
+        curso: name
+      }
+    }
+    this.router.navigate(['/asistencia'], navExtras)
   }
 
 }
