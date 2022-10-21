@@ -58,7 +58,7 @@ export class ScanPage implements OnInit {
     let currentDat = new Date()
     let CurrentClas = this.clases[aletorio]
     this.listaActual['CurrentClass'] = CurrentClas+""
-    this.listaActual['CurrentDate'] = currentDat.toISOString()
+    this.listaActual['CurrentDate'] = currentDat.toLocaleString()
   
     if (await this.getStorage('asistencia')!=null) {
       let dataSG = await this.getStorage('asistencia')
