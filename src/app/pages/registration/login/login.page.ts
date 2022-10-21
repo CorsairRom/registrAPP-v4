@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -24,7 +24,8 @@ import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiedi
 })
 
 export class LoginPage implements OnInit {
-
+  
+  @Output() newItemEvent = new EventEmitter<string>;
   sendData: Usuario;
   users: Users;
   frmlogin: FormGroup;
@@ -71,7 +72,7 @@ export class LoginPage implements OnInit {
     this.dato["hora"]=hr.toISOString()
     this.dato["fecha"]=hr.toISOString()
     console.log(this.dato);
-    
+    this.newItemEvent.emit("Hola mundo")
     
 
   }

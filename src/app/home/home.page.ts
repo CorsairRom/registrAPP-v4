@@ -16,6 +16,7 @@ export class HomePage implements OnInit{
   opc:boolean=false;
   tipo:string;
   dataGet:Usuario;
+  iter:number;
   constructor(
     private router:Router,
     private activatedRouter:ActivatedRoute,
@@ -34,6 +35,21 @@ export class HomePage implements OnInit{
     //   }
       
     // })
+    // this.doRefresh()
+    // do {
+    //   this.doRefresh()
+    //   this.iter=+1
+      
+    // } while (this.iter>1);
+    // while (this.router.url=='/home') {
+    //   this.doRefresh()
+    //   window.location.reload()
+    //   this.iter=+1
+    //   break
+    // }
+    console.log("este es el url"+this.router.url);
+
+    
     
   }
   verMenu(){
@@ -44,9 +60,6 @@ export class HomePage implements OnInit{
     console.log(this.dataGet);
     this.username = await this.dataGet.nombre
     this.tipo = await this.dataGet.tipo
-    
-    
-    
     
   }
   doRefresh(){

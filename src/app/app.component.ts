@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
@@ -15,17 +15,21 @@ import { StorageService } from './services/storage.service';
   providers:[DataService]
 })
 export class AppComponent implements OnInit{
+  @Input() item = '';
+  
   username:string='';
   opc:boolean=false;
   tipo:Usuario;
   tip:Usuario;
+  
   
   constructor(
     private menu:MenuController,
     public datasv:DataService,
     private sg:StorageService,
     public navCtrl: NavController,
-    private storage: Storage
+    private storage: Storage,
+    private router: Router
     ) {
     
     }
@@ -41,11 +45,17 @@ export class AppComponent implements OnInit{
     
     // await this.getData()
     // this.tipo = await this.getAsync()
-    await this.getAsync()
+    
     this.tip = await this.getUsr()
     console.log("este es el tipo ----> " + this.tipo);
     console.log("este es el tipo ----> " + this.tip);
     // console.log((await this.getAsync()).nombre);
+    
+    await this.getAsync()
+    console.log(this.router.url);
+    if (this.router.url === '/home') {
+    }
+    
     
   }
   async getUsr(){
