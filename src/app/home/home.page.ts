@@ -26,15 +26,12 @@ export class HomePage implements OnInit{
     private storage:Storage
   ) {
     
-    // this.activatedRouter.queryParams.subscribe(params=>{
-    //   if (this.router.getCurrentNavigation().extras.state) {
-    //     let usuario = this.router.getCurrentNavigation().extras.state.requestUser;
-    //     this.tipo = this.router.getCurrentNavigation().extras.state.tipo;
-    //     this.username = usuario
-        
-    //   }
-      
-    // })
+    this.activatedRouter.queryParams.subscribe(params=>{
+      if (this.router.getCurrentNavigation().extras.state) {
+        let refresh = this.router.getCurrentNavigation().extras.state.refresh;
+        eval(refresh)
+      }
+    })
     // this.doRefresh()
     // do {
     //   this.doRefresh()

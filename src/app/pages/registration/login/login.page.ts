@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
     private storage: Storage,
     public loadingController: LoadingController
   ) {
-
+    
     this.frmlogin = this.fb.group({
       'usuario': new FormControl("", Validators.required),
       'password': new FormControl("", Validators.required)
@@ -112,10 +112,15 @@ export class LoginPage implements OnInit {
     this.presentLoading();
     this.log(this.sendData);
     this.setStorageAsync();
-
+    
     setTimeout(() => {
       this.loading.dismiss();
-      this.router.navigate(['/home'])
+      let navExtras:NavigationExtras={
+        state:{
+          refresh: 'window.location.reload()'
+        }
+      }
+      this.router.navigate(['/home'], navExtras)
     }, 2000);
   }
 

@@ -28,7 +28,7 @@ export class ScanPage implements OnInit {
 
 
   listaActual:dataScan[] = []; 
-  asistencias = [{}]
+  // asistencias = [{}]
 
 
   curso:string;
@@ -59,12 +59,13 @@ export class ScanPage implements OnInit {
     let CurrentClas = this.clases[aletorio]
     this.listaActual['CurrentClass'] = CurrentClas+""
     this.listaActual['CurrentDate'] = currentDat.toLocaleString()
-  
+    console.log(this.listaActual);
     if (await this.getStorage('asistencia')!=null) {
       let dataSG = await this.getStorage('asistencia')
       let data= []
       data = dataSG
       data.push(this.listaActual)
+      console.log(data);
       await this.setStorage('asistencia', data)
     } else {
       await this.setStorage('asistencia', this.listaActual)
