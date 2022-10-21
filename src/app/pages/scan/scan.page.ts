@@ -4,8 +4,8 @@ import { Storage } from '@ionic/storage-angular';
 import { Router, NavigationExtras } from '@angular/router';
 
 interface dataScan{
-  CurrentClass:string;
-  CurrentDate:string;
+  CurrentClass: string;
+  CurrentDate: string;
 };
 
 
@@ -25,12 +25,12 @@ export class ScanPage implements OnInit {
     "Calidad de software", 
     "Etica"
   ];
-  listaActual: dataScan[] = [
-    {
-      CurrentClass : '',
-      CurrentDate : ''
-    }
-  ];
+
+
+  listaActual:dataScan[] = []; 
+  asistencias = []
+
+
   curso:string;
   //variables para enviar
   data:string;
@@ -53,22 +53,41 @@ export class ScanPage implements OnInit {
     var num = Math.random() * (0 - 6);
     return Math.round((num + 0)*-1)
   }
-  cathDate(){
+  async cathData(){
     let aletorio = this.numeroAleatorioDecimales()
     let currentDat = new Date()
     let CurrentClas = this.clases[aletorio]
-    console.log(CurrentClas);
-    this.listaActual["CurrentClass"] = CurrentClas
-    this.listaActual["CurrentDate"] = currentDat.toISOString()
+    // console.log(CurrentClas);
+    // this.listaActual["CurrentClass"] = CurrentClas
+    // this.listaActual["CurrentDate"] = currentDat.toISOString()
+    this.listaActual['CurrentClass'] = CurrentClas+""
+    this.listaActual['CurrentDate'] = currentDat.toISOString()
+    
     this.SetData()
+
+    // this.asistencias.push(...this.listaActual)
+    // this.asistencias = [...this.listaActual]
+    this.asistencias.concat(...this.asistencias)
+    
     console.log(this.listaActual);
-    // this.sg.set("asd", asdas)
+    console.log(this.asistencias);
+
+    if (await this.getStorage('asistencia')!=null) {
+      let dataSG = await this.getStorage('asistencia')
+    } else {
+      await this.setStorage('asistencia', this.listaActual)
+      console.log("se creo el storage");
+    }
   }
+  // pushElementos(){
+  //   this.asistencias.push(this.listaActual)
+  // }
+
   async SetData ():Promise<void> {
     await this.sg.set("scanData", this.listaActual);
   }
   async cathQR(){
-    let claseActualData = await this.getStorage()
+    let claseActualData = await this.getStorage("claseActual")
     this.data = claseActualData+""
     let fecha = (claseActualData+'').split(',')[0]
     console.log(this.data);
@@ -80,10 +99,14 @@ export class ScanPage implements OnInit {
     // await this.removeKeyStorage();
     this.router.navigate(['/listas'], navigate)
   }
-  async getStorage(){
-    return this.sg.get("claseActual")
+  async getStorage(key:string){
+    return await this.sg.get(key)
+  }
+  async setStorage(key:string,valor){
+    return await this.sg.set(key, valor)
   }
   async removeKeyStorage(){
     await this.sg.remove("claseActual")
   }
+  
 }
