@@ -33,7 +33,7 @@ export class GenerarQrPage implements OnInit {
     this.hora = h.toLocaleString().split(',')[1]
     this.asignatura = await this.getDataAsignatura()
     this.seccion = await this.getDataSeccion()
-    this.value = this.fecha+','+this.hora+','+this.asignatura+','+this.seccion
+    this.value = this.fecha+'-'+this.hora+','+this.asignatura+','+this.seccion
     console.log(this.value);
     
   }

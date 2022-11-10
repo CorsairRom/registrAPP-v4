@@ -117,10 +117,10 @@ export class ListasPage implements OnInit {
     this.usr = await this.getStorage('usr')
     this.nombre = this.usr.nombre+""
     if (this.data.length>0) {
-      this.RegFecha = this.data.split(',')[0]+""
+      this.RegFecha = this.data.split('-')[0]+""
       this.RegHora = this.data.split(',')[1]+""
-      this.RegCurso = this.data.split(',')[2]+""
-      this.RegSeccion = this.data.split(',')[3]+""
+      this.RegCurso = this.data.split(',')[1]+""
+      this.RegSeccion = this.data.split(',')[2]+""
     }
     let getData = await this.getStorage('asistencia')
     

@@ -7,7 +7,7 @@ import {
   Validators
 } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController, MenuController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { Storage } from '@ionic/storage-angular'
 
@@ -46,7 +46,8 @@ export class LoginPage implements OnInit {
     public sg: StorageService,
     public navCtrl: NavController,
     private storage: Storage,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    public menuCtrl:MenuController
   ) {
     
     this.frmlogin = this.fb.group({
@@ -74,7 +75,11 @@ export class LoginPage implements OnInit {
     console.log(this.dato);
     this.newItemEvent.emit("Hola mundo")
     
+    
 
+  }
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
   }
   async getHora(){
     let hr = new Date

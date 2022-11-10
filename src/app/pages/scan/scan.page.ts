@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
+
 import { Storage } from '@ionic/storage-angular';
 import { Router, NavigationExtras } from '@angular/router';
 
@@ -15,7 +15,7 @@ interface dataScan{
   styleUrls: ['./scan.page.scss'],
 })
 export class ScanPage implements OnInit {
-  code: any;
+  code: String;
   nombre: string;
   clases:string[]=[
     "Aplicaciones moviles", 
@@ -28,24 +28,14 @@ export class ScanPage implements OnInit {
 
 
   listaActual:dataScan[] = []; 
-  // asistencias = [{}]
-
+ 
 
   curso:string;
   //variables para enviar
   data:string;
   
-  constructor(private barcodeScanner: BarcodeScanner, 
-              private sg:Storage,
-              private router:Router) { }
-  scan(){
-    this.barcodeScanner.scan().then(barcodeData => {
-      this.code= barcodeData.text;
-      console.log('Barcode data', barcodeData);
-     }).catch(err => {
-         console.log('Error', err);
-     });
-  }
+  constructor(private sg:Storage, private router:Router) { }
+
   async ngOnInit() {
     this.nombre = await this.sg.get("usuario")
   }
@@ -59,6 +49,9 @@ export class ScanPage implements OnInit {
     let CurrentClas = this.clases[aletorio]
     this.listaActual['CurrentClass'] = CurrentClas+""
     this.listaActual['CurrentDate'] = currentDat.toLocaleString()
+    // let CurrentClas = this.code
+    // this.listaActual['CurrentClass'] = CurrentClas.split(',')[1]
+    // this.listaActual['CurrentDate'] = CurrentClas.split(',')[0]
     console.log(this.listaActual);
     if (await this.getStorage('asistencia')!=null) {
       let dataSG = await this.getStorage('asistencia')
@@ -74,24 +67,31 @@ export class ScanPage implements OnInit {
   }
  
   async cathQR(){
-    let claseActualData = await this.getStorage("claseActual")
+    
+    // this.scan()
+    // let claseActualData = await this.getStorage("claseActual")
+   
+    let claseActualData = this.code
     this.data = claseActualData+""
     let fecha = (claseActualData+'').split(',')[0]
     console.log(this.data);
-    let navigate:NavigationExtras = {
-      state:{
-        data: this.data
-      }
-    }
-    // await this.removeKeyStorage();
-    this.router.navigate(['/listas'], navigate)
+    // let navigate:NavigationExtras = {
+    //   state:{
+    //     data: this.data
+    //   }
+    // }
+    // // await this.removeKeyStorage();
+    // this.router.navigate(['/listas'], navigate)
   }
+
   async getStorage(key:string){
     return await this.sg.get(key)
   }
+
   async setStorage(key:string,valor){
     return await this.sg.set(key, valor)
   }
+
   async removeKeyStorage(){
     await this.sg.remove("claseActual")
   }
