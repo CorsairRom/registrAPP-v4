@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { QRCodeModule } from 'angularx-qrcode';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, 
