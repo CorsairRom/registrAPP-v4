@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 
 
@@ -23,7 +24,7 @@ export class AsistenciaPage implements OnInit {
   // cursoData=[]
   
 
-  constructor(private storage:Storage, private router:Router, private activeRoute: ActivatedRoute) {
+  constructor(private storage:Storage, private router:Router, private activeRoute: ActivatedRoute, private alertController: AlertController, private loadingCtrl: LoadingController) {
     this.activeRoute.queryParams.subscribe(params =>{
       if (this.router.getCurrentNavigation().extras.state) {
         this.curso = this.router.getCurrentNavigation().extras.state.curso
@@ -44,10 +45,12 @@ export class AsistenciaPage implements OnInit {
       if (opcion) {
         this.cursoData  = this.dataStorage.filter(res => res.CurrentClass == this.curso);
         console.log(this.cursoData);
+        this.presentAlert()
       }
     }
-    
   }
+
+  
 
   async getStorage(key:string){
     if (this.storage.get(key)!= null) {
@@ -56,6 +59,17 @@ export class AsistenciaPage implements OnInit {
   }
   async setStorage(key:string, value){
     await this.storage.set(key, value);
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Registro',
+      subHeader: this.curso+"",
+      message: 'Registro completo!',
+      buttons: ['OK'],
+    });
+    
+    await alert.present();
   }
 
 }

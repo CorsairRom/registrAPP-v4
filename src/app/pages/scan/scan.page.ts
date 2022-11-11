@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { Storage } from '@ionic/storage-angular';
 import { Router, NavigationExtras } from '@angular/router';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 interface dataScan {
   CurrentClass: string;
@@ -35,8 +36,10 @@ export class ScanPage implements OnDestroy {
   curso: string;
   //variables para enviar
   data: string;
+  comprobar: string;
+  dataSG;
 
-  constructor(private sg: Storage, private router: Router) { this.get() }
+  constructor(private sg: Storage, private router: Router, private alertController: AlertController, private loadingCtrl: LoadingController) { this.get() }
 
   async get() {
     this.nombre = await this.sg.get("usuario")
@@ -45,7 +48,7 @@ export class ScanPage implements OnDestroy {
   ngOnDestroy(): void {
     this.stopScan();
   }
-
+  //------------------SCANER------------------------//
   async checkPermission() {
     try {
       // check or request permission
@@ -77,10 +80,13 @@ export class ScanPage implements OnDestroy {
       if (result?.hasContent) {
         this.scannedResult = result.content;
         console.log(this.scannedResult);
+        this.code = this.scannedResult+""
+        await this.showLoading();
       }
     } catch (e) {
       console.log(e);
       this.stopScan();
+      await this.presentAlert()
     }
   }
   stopScan() {
@@ -88,6 +94,26 @@ export class ScanPage implements OnDestroy {
     BarcodeScanner.stopScan();
     document.querySelector('body').classList.remove('scanner-active');
     this.content_visibility = '';
+  }
+    //------------------FIN SCANER------------------------//
+
+
+  async cargarDatos (){
+      this.listaActual['CurrentClass'] = this.code.split(',')[1]
+      this.listaActual['CurrentDate'] = this.code.split(',')[0]
+      if (await this.getStorage('asistencia') != null) {
+        this.dataSG = await this.getStorage('asistencia')
+        let data = []
+        data = this.dataSG
+        data.push(this.listaActual)
+        console.log(data);
+        await this.setStorage('asistencia', data)
+        
+      } else {
+        await this.setStorage('asistencia', this.listaActual)
+        console.log("se creo el storage");
+      }
+      
   }
 
   // async ngOnInit() {
@@ -103,9 +129,7 @@ export class ScanPage implements OnDestroy {
     let CurrentClas = this.clases[aletorio]
     this.listaActual['CurrentClass'] = CurrentClas + ""
     this.listaActual['CurrentDate'] = currentDat.toLocaleString()
-    // let CurrentClas = this.code
-    // this.listaActual['CurrentClass'] = CurrentClas.split(',')[1]
-    // this.listaActual['CurrentDate'] = CurrentClas.split(',')[0]
+
     console.log(this.listaActual);
     if (await this.getStorage('asistencia') != null) {
       let dataSG = await this.getStorage('asistencia')
@@ -121,10 +145,6 @@ export class ScanPage implements OnDestroy {
   }
 
   async cathQR() {
-
-    // this.scan()
-    // let claseActualData = await this.getStorage("claseActual")
-
     let claseActualData = this.code
     this.data = claseActualData + ""
     let fecha = (claseActualData + '').split(',')[0]
@@ -148,6 +168,28 @@ export class ScanPage implements OnDestroy {
 
   async removeKeyStorage() {
     await this.sg.remove("claseActual")
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'cargando...',
+      duration: 3000,
+      spinner: 'circles',
+    });
+    await this.cargarDatos();
+    
+    loading.present();
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Registro',
+      subHeader: this.listaActual['CurrentClass'],
+      message: 'Registro completo!',
+      buttons: ['OK'],
+    });
+    
+    await alert.present();
   }
 
 }

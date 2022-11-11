@@ -17,20 +17,40 @@ export class AsignaturaPage implements OnInit {
   componentes: asignatura[] = [
     {
     icon: 'assets/icon/cursos/portafolio.png',
-    name: 'aplicaciones wed',
+    name: 'Portafolio',
     redirectTo: '/seccion'
     },
-    
     {
-    icon: 'assets/icon/cursos/analitica.png',
-    name: 'arquitectura ',
+    icon: 'assets/icon/cursos/computadora.png',
+    name: 'Aplicaciones moviles',
     redirectTo: '/seccion'
     },
     {
     icon: 'assets/icon/cursos/arquitectura.png',
-    name: 'aplicaciones móviles',
+    name: 'Arquitectura',
     redirectTo: '/seccion'
     },
+    {
+    icon: 'assets/icon/cursos/etica.png',
+    name: 'Etica',
+    redirectTo: '/seccion'
+    },
+    {
+    icon: 'assets/icon/cursos/eng.png',
+    name: 'Ingles',
+    redirectTo: '/seccion'
+    },
+    {
+    icon: 'assets/icon/cursos/calidad.png',
+    name: 'Calidad de software',
+    redirectTo: '/seccion'
+    },
+    {
+    icon: 'assets/icon/cursos/analitica.png',
+    name: 'Estadistica descriptiva',
+    redirectTo: '/seccion'
+    },
+  
 
   ]
 
