@@ -39,7 +39,9 @@ export class ScanPage implements OnDestroy {
   comprobar: string;
   dataSG;
 
-  constructor(private sg: Storage, private router: Router, private alertController: AlertController, private loadingCtrl: LoadingController) { this.get() }
+  constructor(private sg: Storage, private router: Router, 
+              private alertController: AlertController, 
+              private loadingCtrl: LoadingController) { this.get() }
 
   async get() {
     this.nombre = await this.sg.get("usuario")
@@ -86,8 +88,9 @@ export class ScanPage implements OnDestroy {
     } catch (e) {
       console.log(e);
       this.stopScan();
-      await this.presentAlert()
+      
     }
+    
   }
   stopScan() {
     BarcodeScanner.showBackground();
@@ -116,9 +119,7 @@ export class ScanPage implements OnDestroy {
       
   }
 
-  // async ngOnInit() {
-  //   this.nombre = await this.sg.get("usuario")
-  // }
+
   numeroAleatorioDecimales() {
     var num = Math.random() * (0 - 6);
     return Math.round((num + 0) * -1)
@@ -149,13 +150,12 @@ export class ScanPage implements OnDestroy {
     this.data = claseActualData + ""
     let fecha = (claseActualData + '').split(',')[0]
     console.log(this.data);
-    // let navigate:NavigationExtras = {
-    //   state:{
-    //     data: this.data
-    //   }
-    // }
-    // // await this.removeKeyStorage();
-    // this.router.navigate(['/listas'], navigate)
+    let navigate:NavigationExtras = {
+      state:{
+        data: this.data
+      }
+    }
+    this.router.navigate(['/listas'], navigate)
   }
 
   async getStorage(key: string) {
@@ -173,23 +173,28 @@ export class ScanPage implements OnDestroy {
   async showLoading() {
     const loading = await this.loadingCtrl.create({
       message: 'cargando...',
-      duration: 3000,
+      duration: 1000,
       spinner: 'circles',
     });
+    await loading.present().then(res => setTimeout(() => {
+      this.presentAlert()
+    }, 1000));
     await this.cargarDatos();
-    
-    loading.present();
   }
 
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Registro',
-      subHeader: this.listaActual['CurrentClass'],
-      message: 'Registro completo!',
-      buttons: ['OK'],
+      message: 'Exitoso!',
     });
     
     await alert.present();
+    let navigate:NavigationExtras = {
+      state:{
+        data: this.scannedResult+""
+      }
+    }
+    this.router.navigate(['/listas'], navigate)
   }
 
 }

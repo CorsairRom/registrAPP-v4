@@ -45,7 +45,7 @@ export class AsistenciaPage implements OnInit {
       if (opcion) {
         this.cursoData  = this.dataStorage.filter(res => res.CurrentClass == this.curso);
         console.log(this.cursoData);
-        this.presentAlert()
+        
       }
     }
   }
@@ -61,15 +61,6 @@ export class AsistenciaPage implements OnInit {
     await this.storage.set(key, value);
   }
 
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      header: 'Registro',
-      subHeader: this.curso+"",
-      message: 'Registro completo!',
-      buttons: ['OK'],
-    });
-    
-    await alert.present();
-  }
+ 
 
 }
