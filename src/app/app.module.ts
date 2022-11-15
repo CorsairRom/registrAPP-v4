@@ -9,6 +9,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { QRCodeModule } from 'angularx-qrcode';
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { QRCodeModule } from 'angularx-qrcode';
             AppRoutingModule,  
             IonicStorageModule.forRoot(), 
             HttpClientModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }], 
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, EmailComposer], 
   bootstrap: [AppComponent],
 })
 export class AppModule {}

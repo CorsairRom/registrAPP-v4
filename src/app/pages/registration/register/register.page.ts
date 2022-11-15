@@ -27,12 +27,12 @@ export class RegisterPage implements OnInit {
       if(available){
         this.openEmail();
       }
-    })
+    });
     this.frmRecuperar = this.fb.group({
       'usuario': new FormControl("", Validators.required),
     })
    }
-
+   
   ngOnInit() {
     
   }
