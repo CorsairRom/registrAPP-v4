@@ -65,8 +65,8 @@ export class LoginPage implements OnInit {
       return this.users = data
     })
     // pruebas service
-    this.userData = await this.datasv.getUser();
-    console.log(this.userData);
+    // this.userData = await this.datasv.getUser();
+    // console.log(this.userData);
 
     let hr = await this.getHora()
 

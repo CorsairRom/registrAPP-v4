@@ -24,7 +24,7 @@ export class DataService {
     return this.http.get('../assets/users.json')
                         .toPromise()
                         .then(resp => {
-                          const usr = resp as Usuario;
+                          const usr = resp as Users;
                           return Promise.resolve(usr)
                         })
   }

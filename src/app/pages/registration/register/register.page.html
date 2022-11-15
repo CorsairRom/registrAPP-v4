@@ -15,18 +15,16 @@
       <ion-label position="floating">Usuario</ion-label>
       <ion-input required formControlName="usuario" type="text"></ion-input>
     </ion-item>
-    <!-- <ion-item>
+    <ion-item>
       <ion-label position="floating">Email</ion-label>
       <ion-input required formControlName="email" type="email"></ion-input>
-    </ion-item> -->
+    </ion-item>
     <br>
-    <ion-button expand="full" *ngIf="hasAccount" block color="duocy"  [disabled]="frmRecuperar.invalid" (click)="checkAccount()">
-      correo
-    </ion-button>
-    <ion-button expand="full" block color="duocy" type="submit" [disabled]="frmRecuperar.invalid" (click)="openEmail()">
+    <ion-button expand="full" block color="duocy" type="submit" [disabled]="frmRecuperar.invalid" (click)="recuperarPass()">
       Recuperar
     </ion-button>
-    
   </form>
+
+
 
 </ion-content>

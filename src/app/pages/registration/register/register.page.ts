@@ -6,9 +6,12 @@ import {
   Validators
 } from '@angular/forms';
 import { IonicNativePlugin } from '@ionic-native/core';
+import { ToastController } from '@ionic/angular';
+import { DataService } from 'src/app/services/data.service';
 
 // import {EmailComposer} from "@ionic-native/email-composer/ngx";
-import { EmailComposer, EmailComposerOptions } from '@awesome-cordova-plugins/email-composer/ngx';
+// import { EmailComposer, EmailComposerOptions } from '@awesome-cordova-plugins/email-composer/ngx';
+import { Usuario, Users } from '../../../interfaces/users';
 
 
 @Component({
@@ -17,62 +20,45 @@ import { EmailComposer, EmailComposerOptions } from '@awesome-cordova-plugins/em
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-  pass:string = 'admin';
+  pass:string;
   frmRecuperar: FormGroup;
-  hasAccount: false;
-  usuario:string = 'admin';
-  emailTo:string;
-  constructor(public fb: FormBuilder, private emailComposer: EmailComposer) {
-    this.emailComposer.isAvailable().then((available: boolean)=>{
-      if(available){
-        this.openEmail();
-      }
-    });
+  email:string;
+  usuario:string;
+  userData:Users;
+  dataCollected:Usuario;
+  
+  constructor(public fb: FormBuilder, public datasv: DataService, private toastController: ToastController) {
     this.frmRecuperar = this.fb.group({
       'usuario': new FormControl("", Validators.required),
+      'email': new FormControl("", Validators.required),
+      
     })
    }
    
-  ngOnInit() {
-    
+  async ngOnInit() {
+    this.userData = await this.datasv.getUser();
+
   }
 
-  async checkAccount(){
-    this.hasAccount = await this.emailComposer.hasAccount();
-  }
-
-  async openEmail(){
-    const email: EmailComposerOptions = {
-      to: 'ric.romero',
-      attachments: [],
-      subject: 'Recuperar Contraseña de '+ this.usuario,
-      body: 'la contraseña es: '+ this.pass,
-      isHtml: false
+  async recuperarPass(){
+    let form = this.frmRecuperar.value
+    let queryUsr = this.userData.usuarios.some(usr => {return usr.usr == form.usuario})
+    let queryEmail = this.userData.usuarios.some(usr =>{return usr.email == form.email})
+    if (queryUsr && queryEmail) {
+      this.dataCollected = this.userData.usuarios.find(usr => {return usr.usr == form.usuario})
+      
+      await this.toastMessage(this.dataCollected.password+"")
+    } else {
+      
+      await this.toastMessage("El usuario no fue encontrado")
     }
-    await this.emailComposer.open(email);
   }
 
-
-
-  // sendEmail(){
-  //   let dataForm = this.frmRecuperar.value
-  //   let em = dataForm.email+""
-  //   let usuario = dataForm.usuario
-
-  //   this.emailComposer.isAvailable().then((available: boolean) =>{
-  //     if(available) {
-  //       //Now we know we can send
-  //     }
-  //    });
-     
-  //    let email = {
-  //      to: em,
-  //      attachments: [],
-  //      subject: 'Recuperar Contraseña de '+ usuario,
-  //      body: 'la contraseña es: '+ this.pass ,
-  //      isHtml: true
-  //    };
-  //    this.emailComposer.open(email);
-  
-  // }
+  async toastMessage(message:string){
+    const toast = await this.toastController.create({
+      message: 'Tu Contraseña es: '+message,
+      duration: 2000,
+      position: 'middle'
+    })
+  }
 }
