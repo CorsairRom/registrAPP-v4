@@ -47,12 +47,12 @@ export class AppComponent implements OnInit{
     // this.tipo = await this.getAsync()
     
     this.tip = await this.getUsr()
-    console.log("este es el tipo ----> " + this.tipo);
-    console.log("este es el tipo ----> " + this.tip);
+    // console.log("este es el tipo ----> " + this.tipo);
+    // console.log("este es el tipo ----> " + this.tip);
     // console.log((await this.getAsync()).nombre);
     
     await this.getAsync()
-    console.log(this.router.url);
+    // console.log(this.router.url);
     if (this.router.url === '/home') {
     }
     

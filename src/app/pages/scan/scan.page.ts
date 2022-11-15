@@ -8,7 +8,13 @@ interface dataScan {
   CurrentClass: string;
   CurrentDate: string;
 };
-
+interface clasesUsuario{
+  usuario: string
+  clases:{
+    currentClass: string;
+    currentDate:string;
+  }
+}
 
 @Component({
   selector: 'app-scan',
@@ -37,6 +43,7 @@ export class ScanPage implements OnDestroy {
   //variables para enviar
   data: string;
   comprobar: string;
+  asistenciasUsuario:clasesUsuario;
   dataSG;
 
   constructor(private sg: Storage, private router: Router, 
@@ -104,6 +111,9 @@ export class ScanPage implements OnDestroy {
   async cargarDatos (){
       this.listaActual['CurrentClass'] = this.code.split(',')[1]
       this.listaActual['CurrentDate'] = this.code.split(',')[0]
+      this.asistenciasUsuario.usuario =  this.nombre
+      this.asistenciasUsuario.clases['currentClass'] = this.code.split(',')[1]
+      this.asistenciasUsuario.clases['currentDate'] = this.code.split(',')[0]
       if (await this.getStorage('asistencia') != null) {
         this.dataSG = await this.getStorage('asistencia')
         let data = []

@@ -44,7 +44,7 @@ export class HomePage implements OnInit{
     //   this.iter=+1
     //   break
     // }
-    console.log("este es el url"+this.router.url);
+    // console.log("este es el url"+this.router.url);
 
     
     
@@ -54,7 +54,7 @@ export class HomePage implements OnInit{
   }
   async ngOnInit() {
     await this.getData()
-    console.log(this.dataGet);
+    // console.log(this.dataGet);
     this.username = await this.dataGet.nombre
     this.tipo = await this.dataGet.tipo
     

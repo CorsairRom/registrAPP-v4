@@ -10,8 +10,8 @@
        {
           "nombre": "Alexis Moore",
           "usr": "ale.moore",
-          "password": 1234,
-          "email": "richard.romero@hotmail.cl",
+          "password": "ale1234",
+          "email": "ale.moore@duocuc.cl",
           "tipo": "alumno"
        },
        {
@@ -32,7 +32,7 @@
           "nombre": "Walcoldo Miranda",
           "usr": "waco.mira",
           "password": 1234,
-          "email": "richard.romerocx@gmail.com",
+          "email": "waco.miranda@profesorduoc.cl",
           "tipo": "profesor"
        }
     ]

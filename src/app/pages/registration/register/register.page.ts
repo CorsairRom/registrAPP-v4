@@ -29,8 +29,8 @@ export class RegisterPage implements OnInit {
   
   constructor(public fb: FormBuilder, public datasv: DataService, private toastController: ToastController) {
     this.frmRecuperar = this.fb.group({
-      'usuario': new FormControl("", Validators.required),
-      'email': new FormControl("", Validators.required),
+      usuario : new FormControl("", Validators.required),
+      email : new FormControl('', Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])),
       
     })
    }
@@ -57,8 +57,10 @@ export class RegisterPage implements OnInit {
   async toastMessage(message:string){
     const toast = await this.toastController.create({
       message: 'Tu Contraseña es: '+message,
-      duration: 2000,
-      position: 'middle'
+      duration: 2500,
+      position: 'bottom'
     })
+
+    await toast.present();
   }
 }

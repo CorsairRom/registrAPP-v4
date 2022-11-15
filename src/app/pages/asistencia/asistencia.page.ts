@@ -28,7 +28,7 @@ export class AsistenciaPage implements OnInit {
     this.activeRoute.queryParams.subscribe(params =>{
       if (this.router.getCurrentNavigation().extras.state) {
         this.curso = this.router.getCurrentNavigation().extras.state.curso
-        console.log(this.curso);
+        // console.log(this.curso);
       }
     })
    }
@@ -36,15 +36,15 @@ export class AsistenciaPage implements OnInit {
   async ngOnInit() {
     
     this.dataStorage = await this.getStorage('asistencia')
-    console.log(this.dataStorage);
+    // console.log(this.dataStorage);
     // let dataST = this.dataStorage.forEach(res => res.CurrentClass == this.curso)
-    console.log('datos del for each');
+    // console.log('datos del for each');
     // console.log(this.dataStorage.forEach(res => res.CurrentClass == this.curso));
     if (this.dataStorage !=null) {
       let opcion = this.dataStorage.some(res => res.CurrentClass == this.curso);
       if (opcion) {
         this.cursoData  = this.dataStorage.filter(res => res.CurrentClass == this.curso);
-        console.log(this.cursoData);
+        // console.log(this.cursoData);
         
       }
     }
