@@ -57,6 +57,8 @@ export class LoginPage implements OnInit {
   }
 
   async ngOnInit() {
+   
+ 
     await fetch('../assets/users.json').then(response => {
       return response.json();
     }).then(data => {
