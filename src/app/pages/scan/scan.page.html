@@ -10,8 +10,10 @@
       <ion-card-content>
         Escanea el código QR para dejar instancia de tu asistencia 
       </ion-card-content>
-      <ion-button color="duocy" block  (click)="cathData()" >QR Random</ion-button>
       <ion-button color="duocy" block  (click)="startScan()">QR CODE </ion-button>
+      <ion-button color="duocy" block  (click)="cathData()">ALEATORIO </ion-button>
+      <ion-button color="duocy" block  (click)="showData()">data </ion-button>
+      
     </ion-card>
     <ion-row>
     </ion-row>
@@ -19,4 +21,9 @@
   <ion-item *ngIf="scannedResult">
     <ion-label class="ion-text-wrap">Scanned Result: {{scannedResult}}</ion-label>
   </ion-item>
+
+  <ion-item *ngFor="let item of DataShow">
+    <ion-label> {{item.CurrentClass}} -- {{item.CurrentDate}}</ion-label>
+  </ion-item>
+
 </ion-content>

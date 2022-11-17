@@ -31,9 +31,10 @@ export class GenerarQrPage implements OnInit {
     let h = await this.getFecha()
     this.fecha = h.toLocaleString().split(',')[0]
     this.hora = h.toLocaleString().split(',')[1]
+    let date = h.toLocaleDateString()+""
     this.asignatura = await this.getDataAsignatura()
     this.seccion = await this.getDataSeccion()
-    this.value = this.fecha+'-'+this.hora+','+this.asignatura+','+this.seccion
+    this.value = this.fecha+' -'+this.hora+','+this.asignatura+','+this.seccion
     console.log(this.value);
     
   }

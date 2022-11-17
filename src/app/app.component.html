@@ -20,10 +20,10 @@
           <ion-icon slot="start" name="id-card-outline"></ion-icon>
           Scan
         </ion-item>
-        <ion-item detail routerLink="/listas" (click)="cerrarMenu()" id="listas">
+        <!-- <ion-item detail routerLink="/listas" (click)="cerrarMenu()" id="listas">
           <ion-icon slot="start" name="list-outline"></ion-icon>
           Listas
-        </ion-item>
+        </ion-item> -->
         <ion-item detail routerLink="/asignatura" (click)="cerrarMenu()" id="asignaturas" *ngIf="tipo?.tipo =='profesor'">
           <ion-icon slot="start" name="albums-outline"></ion-icon>
           asignatura

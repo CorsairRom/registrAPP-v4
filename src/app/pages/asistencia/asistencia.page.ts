@@ -53,7 +53,7 @@ export class AsistenciaPage implements OnInit {
   
 
   async getStorage(key:string){
-    if (this.storage.get(key)!= null) {
+    if (await this.storage.get(key)!= null) {
       return await this.storage.get(key)
     }
   }

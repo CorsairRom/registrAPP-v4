@@ -43,8 +43,8 @@ export class SeccionPage implements OnInit {
 
   ngOnInit() {
   }
-  sendSeccion(seccion){
-    this.storage.set('seccion', seccion+'')
+  async sendSeccion(seccion){
+    await this.storage.set('seccion', seccion+'')
   }
   
 

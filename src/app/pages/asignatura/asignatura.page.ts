@@ -59,8 +59,8 @@ export class AsignaturaPage implements OnInit {
 
   ngOnInit() {
   }
-  sendData(name){
-    this.storage.set('asignatura', name+"")
+  async sendData(name){
+    await this.storage.set('asignatura', name+"")
   }
 
 }

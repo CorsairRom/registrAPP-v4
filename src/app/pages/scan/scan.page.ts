@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { Storage } from '@ionic/storage-angular';
 import { Router, NavigationExtras } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+
 
 interface dataScan {
   CurrentClass: string;
@@ -34,6 +35,7 @@ export class ScanPage implements OnDestroy {
   ];
   scannedResult: any;
   content_visibility = '';
+  DataShow:dataScan[] = [];
 
 
   listaActual: dataScan[] = [];
@@ -48,7 +50,8 @@ export class ScanPage implements OnDestroy {
 
   constructor(private sg: Storage, private router: Router, 
               private alertController: AlertController, 
-              private loadingCtrl: LoadingController) { this.get() }
+              private loadingCtrl: LoadingController,
+              private toastController: ToastController) { this.get() }
 
   async get() {
     this.nombre = await this.sg.get("usuario")
@@ -88,9 +91,15 @@ export class ScanPage implements OnDestroy {
       this.content_visibility = '';
       if (result?.hasContent) {
         this.scannedResult = result.content;
-        console.log(this.scannedResult);
         this.code = this.scannedResult+""
-        await this.showLoading();
+        await this.cargarDatos();
+        if (this.code.split(',').length > 2) { 
+          await this.showLoading();
+          
+        } else {
+          this.stopScan();
+          this.presentToast();
+        }
       }
     } catch (e) {
       console.log(e);
@@ -111,9 +120,6 @@ export class ScanPage implements OnDestroy {
   async cargarDatos (){
       this.listaActual['CurrentClass'] = this.code.split(',')[1]
       this.listaActual['CurrentDate'] = this.code.split(',')[0]
-      this.asistenciasUsuario.usuario =  this.nombre
-      this.asistenciasUsuario.clases['currentClass'] = this.code.split(',')[1]
-      this.asistenciasUsuario.clases['currentDate'] = this.code.split(',')[0]
       if (await this.getStorage('asistencia') != null) {
         this.dataSG = await this.getStorage('asistencia')
         let data = []
@@ -140,18 +146,15 @@ export class ScanPage implements OnDestroy {
     let CurrentClas = this.clases[aletorio]
     this.listaActual['CurrentClass'] = CurrentClas + ""
     this.listaActual['CurrentDate'] = currentDat.toLocaleString()
-
-    console.log(this.listaActual);
     if (await this.getStorage('asistencia') != null) {
       let dataSG = await this.getStorage('asistencia')
       let data = []
       data = dataSG
       data.push(this.listaActual)
-      console.log(data);
       await this.setStorage('asistencia', data)
+
     } else {
       await this.setStorage('asistencia', this.listaActual)
-      console.log("se creo el storage");
     }
   }
 
@@ -159,13 +162,12 @@ export class ScanPage implements OnDestroy {
     let claseActualData = this.code
     this.data = claseActualData + ""
     let fecha = (claseActualData + '').split(',')[0]
-    console.log(this.data);
-    let navigate:NavigationExtras = {
-      state:{
-        data: this.data
-      }
-    }
-    this.router.navigate(['/listas'], navigate)
+    // let navigate:NavigationExtras = {
+    //   state:{
+    //     data: this.data
+    //   }
+    // }
+    // this.router.navigate(['/listas'], navigate)
   }
 
   async getStorage(key: string) {
@@ -189,7 +191,7 @@ export class ScanPage implements OnDestroy {
     await loading.present().then(res => setTimeout(() => {
       this.presentAlert()
     }, 1000));
-    await this.cargarDatos();
+    // await this.cargarDatos();
   }
 
   async presentAlert() {
@@ -199,12 +201,20 @@ export class ScanPage implements OnDestroy {
     });
     
     await alert.present();
-    let navigate:NavigationExtras = {
-      state:{
-        data: this.scannedResult+""
-      }
-    }
-    this.router.navigate(['/listas'], navigate)
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'QR inválido',
+      duration: 1500,
+      position: 'middle'
+    });
+
+    await toast.present();
+  }
+
+  async showData(){
+    this.DataShow = await this.sg.get('asistencia')
   }
 
 }
