@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { GenerarQrPage } from './generar-qr.page';
 
-describe('GenerarQrPage', () => {
+xdescribe('GenerarQrPage', () => {
   let component: GenerarQrPage;
   let fixture: ComponentFixture<GenerarQrPage>;
 
